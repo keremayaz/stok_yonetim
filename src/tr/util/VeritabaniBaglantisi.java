@@ -5,17 +5,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class VeritabaniBaglantisi {
-    private static final String URL = "jdbc:postgresql://localhost:5432/stock_db";
-    private static final String KULLANICI = "postgres"; // Varsayılan, gerekirse değiştirin
-    private static final String SIFRE = "123456789"; // Varsayılan, gerekirse değiştirin
+    // SQLite veritabanı dosyası proje klasöründe oluşacak
+    private static final String URL = "jdbc:sqlite:stok.db";
 
     public static Connection baglantiGetir() throws SQLException {
         try {
-            // PostgreSQL sürücüsünü yükle
-            Class.forName("org.postgresql.Driver");
-            return DriverManager.getConnection(URL, KULLANICI, SIFRE);
+            // SQLite sürücüsünü yükle
+            Class.forName("org.sqlite.JDBC");
+            return DriverManager.getConnection(URL);
         } catch (ClassNotFoundException e) {
-            throw new SQLException("PostgreSQL JDBC Sürücüsü bulunamadı.", e);
+            throw new SQLException("SQLite JDBC Sürücüsü bulunamadı. Lütfen kütüphaneyi eklediğinizden emin olun.", e);
         }
     }
 }

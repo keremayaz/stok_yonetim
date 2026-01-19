@@ -528,7 +528,7 @@ public class AnaController {
                     view.getPersonelTableModel().setRowCount(0);
                     for (Kullanici k : kullanicilar) {
                         view.getPersonelTableModel().addRow(new Object[]{
-                            k.getId(), k.getAd(), k.getSoyad(), k.getKullaniciAdi(), k.getRolId()
+                            k.getId(), k.getAd(), k.getSoyad(), k.getKullaniciAdi(), k.getRolAd() // Rol ID yerine Rol Adı
                         });
                     }
                 } catch (Exception e) {
@@ -565,7 +565,18 @@ public class AnaController {
         String ad = (String) view.getTblPersonel().getValueAt(selectedRow, 1);
         String soyad = (String) view.getTblPersonel().getValueAt(selectedRow, 2);
         String kAdi = (String) view.getTblPersonel().getValueAt(selectedRow, 3);
-        int rolId = (int) view.getTblPersonel().getValueAt(selectedRow, 4);
+        
+        // Rol Adı'ndan Rol ID'yi bulmamız lazım (Düzenleme penceresi için)
+        String rolAdi = (String) view.getTblPersonel().getValueAt(selectedRow, 4);
+        int rolId = -1;
+        if (rolListesi != null) {
+            for (Rol r : rolListesi) {
+                if (r.getAd().equals(rolAdi)) {
+                    rolId = r.getId();
+                    break;
+                }
+            }
+        }
 
         // Şifreyi güvenlik nedeniyle tablodan almıyoruz, boş gönderiyoruz (değiştirilmezse eski kalır mantığı eklenebilir ama şimdilik basit tutalım)
         Kullanici seciliKullanici = new Kullanici(id, ad, soyad, kAdi, "", rolId);

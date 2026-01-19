@@ -7,6 +7,9 @@ public class Kullanici {
     private String kullaniciAdi;
     private String sifre;
     private int rolId;
+    
+    // Ekran için eklenen alan
+    private String rolAd;
 
     public Kullanici() {}
 
@@ -17,6 +20,17 @@ public class Kullanici {
         this.kullaniciAdi = kullaniciAdi;
         this.sifre = sifre;
         this.rolId = rolId;
+    }
+    
+    // Genişletilmiş Constructor
+    public Kullanici(int id, String ad, String soyad, String kullaniciAdi, String sifre, int rolId, String rolAd) {
+        this.id = id;
+        this.ad = ad;
+        this.soyad = soyad;
+        this.kullaniciAdi = kullaniciAdi;
+        this.sifre = sifre;
+        this.rolId = rolId;
+        this.rolAd = rolAd;
     }
 
     public int getId() { return id; }
@@ -36,4 +50,7 @@ public class Kullanici {
 
     public int getRolId() { return rolId; }
     public void setRolId(int rolId) { this.rolId = rolId; }
+
+    public String getRolAd() { return rolAd; }
+    public void setRolAd(String rolAd) { this.rolAd = rolAd; }
 }

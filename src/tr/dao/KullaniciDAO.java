@@ -30,14 +30,26 @@ public class KullaniciDAO {
 
     public List<Kullanici> tumKullanicilariGetir() {
         List<Kullanici> kullanicilar = new ArrayList<>();
-        String sql = "SELECT * FROM kullanicilar ORDER BY id";
+        // JOIN ile rol adını çekiyoruz
+        String sql = "SELECT k.id, k.ad, k.soyad, k.kullanici_adi, k.sifre, k.rol_id, r.ad AS rol_adi " +
+                     "FROM kullanicilar k " +
+                     "LEFT JOIN roller r ON k.rol_id = r.id " +
+                     "ORDER BY k.id";
         
         try (Connection conn = VeritabaniBaglantisi.baglantiGetir();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             
             while (rs.next()) {
-                kullanicilar.add(mapResultSetToKullanici(rs));
+                kullanicilar.add(new Kullanici(
+                    rs.getInt("id"),
+                    rs.getString("ad"),
+                    rs.getString("soyad"),
+                    rs.getString("kullanici_adi"),
+                    rs.getString("sifre"),
+                    rs.getInt("rol_id"),
+                    rs.getString("rol_adi") // Rol Adı
+                ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
